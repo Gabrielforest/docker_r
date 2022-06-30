@@ -6,8 +6,8 @@ library(parallel)
 #########################################
 #########################################
 # only adjust this data based on your situation (also see lower)
-inputdir <- getwd()
-outputdir <- getwd()
+inputdir <- "code"
+outputdir <- "output"
 
 #########################
 # create a folder called 'maps'in outputdir (with windows explorer), and withing that folder tow additional folders called "asc" "kml"

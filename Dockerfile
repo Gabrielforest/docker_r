@@ -1,18 +1,21 @@
 # Base image https://hub.docker.com/u/rocker/
 FROM rocker/r-base:latest
 
+## create directories
+RUN mkdir -p /code
+RUN mkdir -p /output
+
 ## copy files
-COPY /install_packages.R /install_packages.R
-COPY /CIRC_NEIGH_PARALLEL_SNP_Khaya.R /CIRC_NEIGH_PARALLEL_SNP_Khaya.R
+COPY /code/nice.R /code/nice.R
 
 ## install R-packages
-RUN Rscript /install_packages.R
+RUN R -e "install.packages(c('raster', 'parallel', 'adegenet', 'plyr', 'stringr', 'maptools'), dependencies=TRUE, repos='http://cran.rstudio.com/')"
 
-# run the Rscript automatically
-CMD Rscript /CIRC_NEIGH_PARALLEL_SNP_Khaya.R
+## run the script
+CMD Rscript /code/nice.R
 
 # build image:
-# docker build -t myname/myimage .
+# docker build -t gabriel/bnut .
 
 # start container to test the myimage:
-# docker run -it --rm -v ~/"R-Script in Docker" myname/myimage
+# docker run -it --rm -v ~/"R-Script in Docker"/output:/output gabriel/bnut
